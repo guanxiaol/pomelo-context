@@ -1,0 +1,4 @@
+interface:
+  display_name: "Context Workbook"
+  short_description: "Read and create low-token context workbook bundles."
+  default_prompt: "Use the Context Workbook skill to pack, inspect, and selectively read .cwb bundles."

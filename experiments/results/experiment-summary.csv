@@ -1,0 +1,13 @@
+scenarioId,scenarioTitle,method,tokens,accuracy,factsFound,factsTotal,structureScore,efficiency
+implementation-plan,Checkout Animation Implementation Plan,markdown-full,1796,1,5,5,50,0.5567928730512249
+implementation-plan,Checkout Animation Implementation Plan,html-source,2340,1,5,5,90,0.42735042735042733
+implementation-plan,Checkout Animation Implementation Plan,cwb-small,1037,1,5,5,100,0.9643201542912246
+pr-review,Streaming Backpressure PR Review,markdown-full,1766,1,5,5,50,0.5662514156285391
+pr-review,Streaming Backpressure PR Review,html-source,2310,1,5,5,90,0.4329004329004329
+pr-review,Streaming Backpressure PR Review,cwb-small,966,1,5,5,100,1.0351966873706004
+custom-editor,Feature Flag Editor Export,markdown-full,1762,1,5,5,50,0.5675368898978433
+custom-editor,Feature Flag Editor Export,html-source,2306,1,5,5,90,0.4336513443191674
+custom-editor,Feature Flag Editor Export,cwb-small,969,1,5,5,100,1.0319917440660475
+web-archive,HTML Artifact Article Archive,markdown-full,1792,1,5,5,50,0.5580357142857143
+web-archive,HTML Artifact Article Archive,html-source,2336,1,5,5,90,0.4280821917808219
+web-archive,HTML Artifact Article Archive,cwb-small,980,1,5,5,100,1.0204081632653061

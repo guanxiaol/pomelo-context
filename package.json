@@ -1,0 +1,45 @@
+{
+  "name": "pomelo-context",
+  "version": "0.1.0",
+  "description": "Low-token context workbook protocol for agent-readable, human-readable artifacts.",
+  "type": "module",
+  "homepage": "https://github.com/guanxiaol/pomelo-context#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guanxiaol/pomelo-context.git"
+  },
+  "bugs": {
+    "url": "https://github.com/guanxiaol/pomelo-context/issues"
+  },
+  "bin": {
+    "cwb": "./src/cli.ts"
+  },
+  "files": [
+    "src",
+    "skills",
+    "examples",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "cwb": "node ./src/cli.ts",
+    "test": "node --test tests/*.test.ts",
+    "demo": "node ./src/cli.ts pack examples/web-archive.md --recipe web-or-chat-archive --out tmp/demo.cwb && node ./src/cli.ts inspect tmp/demo.cwb --index --budget small && node ./src/cli.ts validate tmp/demo.cwb && node ./src/cli.ts benchmark . --recipe module-map",
+    "experiment": "node ./src/cli.ts experiment --out experiments/results"
+  },
+  "engines": {
+    "node": ">=22.18"
+  },
+  "keywords": [
+    "pomelo",
+    "ai",
+    "agents",
+    "context",
+    "workbook",
+    "xlsx",
+    "markdown",
+    "html",
+    "cli"
+  ],
+  "license": "MIT"
+}

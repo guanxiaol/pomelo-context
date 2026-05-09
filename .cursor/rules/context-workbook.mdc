@@ -1,0 +1,34 @@
+---
+description: Use Context Workbook bundles for low-token context packing, inspection, selective sheet-range reading, validation, benchmarking, and artifact conversion.
+globs:
+alwaysApply: false
+---
+
+When the task involves preserving, migrating, summarizing, or reusing large context, prefer the Context Workbook workflow.
+
+Use the local CLI:
+
+```bash
+node ./src/cli.ts pack <input> --recipe web-or-chat-archive --out out.cwb
+node ./src/cli.ts inspect out.cwb --index --budget small
+node ./src/cli.ts read out.cwb --sheet Sections --range A1:E20
+node ./src/cli.ts validate out.cwb
+node ./src/cli.ts benchmark out.cwb
+node ./src/cli.ts experiment --out experiments/results
+```
+
+Protocol:
+
+1. Read `manifest.json` first.
+2. Choose sheets by task, row count, and `suggestedRanges`.
+3. Read only specific `sheets/*.csv` ranges.
+4. Use `workbook.xlsx` and `artifact.html` for human review, not default model context.
+5. Keep operation local-first unless the user explicitly requests AI enrichment.
+
+Recipe hints:
+
+- Web/chat/archive: `web-or-chat-archive`
+- Plans: `implementation-plan`
+- PR review: `annotated-pr-review`
+- Code understanding: `module-map`
+- Editor state/export: `custom-editor-export`

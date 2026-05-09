@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Mixed Web Artifact</title>
+  <style>
+    body { font-family: system-ui; }
+  </style>
+</head>
+<body>
+  <article>
+    <h1>Mixed Web Artifact</h1>
+    <p>This page contains text, photos, tabular data, and code so Context Workbook can verify modality compatibility.</p>
+    <figure>
+      <img src="https://example.com/chart.png" alt="Quarterly token savings chart" width="640" height="360" srcset="https://example.com/chart@2x.png 2x">
+      <figcaption>Token savings by context transfer format.</figcaption>
+    </figure>
+    <table>
+      <thead>
+        <tr><th>Method</th><th>Tokens</th><th>Accuracy</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Markdown</td><td>1779</td><td>100%</td></tr>
+        <tr><td>CWB small-read</td><td>924</td><td>100%</td></tr>
+      </tbody>
+    </table>
+    <pre><code class="language-ts">export function readRange(sheet: string, range: string) {
+  return `${sheet}:${range}`;
+}</code></pre>
+    <p>Read the <a href="https://thariqs.github.io/html-effectiveness/">HTML examples</a> for inspiration.</p>
+  </article>
+</body>
+</html>

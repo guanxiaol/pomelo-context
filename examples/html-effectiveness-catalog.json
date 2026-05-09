@@ -1,0 +1,166 @@
+{
+  "source": "https://thariqs.github.io/html-effectiveness/",
+  "description": "Catalog of Thariq Shihipar's HTML artifact examples mapped to Context Workbook recipes.",
+  "demos": [
+    {
+      "id": "01-exploration-code-approaches",
+      "title": "Three code approaches",
+      "category": "Exploration & Planning",
+      "url": "https://thariqs.github.io/html-effectiveness/01-exploration-code-approaches.html",
+      "recipe": "compare-options",
+      "expectedSheets": ["Option Matrix", "Tradeoffs", "Sources"]
+    },
+    {
+      "id": "02-exploration-visual-designs",
+      "title": "Visual design directions",
+      "category": "Exploration & Planning",
+      "url": "https://thariqs.github.io/html-effectiveness/02-exploration-visual-designs.html",
+      "recipe": "compare-options",
+      "expectedSheets": ["Option Matrix", "Tradeoffs", "Sources"]
+    },
+    {
+      "id": "03-code-review-pr",
+      "title": "Annotated pull request",
+      "category": "Code Review & Understanding",
+      "url": "https://thariqs.github.io/html-effectiveness/03-code-review-pr.html",
+      "recipe": "annotated-pr-review",
+      "expectedSheets": ["Findings", "Files", "Suggested Next Steps"]
+    },
+    {
+      "id": "04-code-understanding",
+      "title": "Module map",
+      "category": "Code Review & Understanding",
+      "url": "https://thariqs.github.io/html-effectiveness/04-code-understanding.html",
+      "recipe": "module-map",
+      "expectedSheets": ["Module Map", "Call Path", "Gotchas"]
+    },
+    {
+      "id": "05-design-system",
+      "title": "Living design system",
+      "category": "Design",
+      "url": "https://thariqs.github.io/html-effectiveness/05-design-system.html",
+      "recipe": "design-system-reference",
+      "expectedSheets": ["Tokens", "Component Matrix"]
+    },
+    {
+      "id": "06-component-variants",
+      "title": "Component variants",
+      "category": "Design",
+      "url": "https://thariqs.github.io/html-effectiveness/06-component-variants.html",
+      "recipe": "design-system-reference",
+      "expectedSheets": ["Tokens", "Component Matrix"]
+    },
+    {
+      "id": "07-prototype-animation",
+      "title": "Animation sandbox",
+      "category": "Prototyping",
+      "url": "https://thariqs.github.io/html-effectiveness/07-prototype-animation.html",
+      "recipe": "prototype-snapshot",
+      "expectedSheets": ["Prototype State", "Interaction Notes", "Exports"]
+    },
+    {
+      "id": "08-prototype-interaction",
+      "title": "Clickable flow",
+      "category": "Prototyping",
+      "url": "https://thariqs.github.io/html-effectiveness/08-prototype-interaction.html",
+      "recipe": "prototype-snapshot",
+      "expectedSheets": ["Prototype State", "Interaction Notes", "Exports"]
+    },
+    {
+      "id": "09-slide-deck",
+      "title": "Arrow-key slide deck",
+      "category": "Decks",
+      "url": "https://thariqs.github.io/html-effectiveness/09-slide-deck.html",
+      "recipe": "research-explainer",
+      "expectedSheets": ["TLDR", "Steps", "Links"]
+    },
+    {
+      "id": "10-svg-illustrations",
+      "title": "SVG figure sheet",
+      "category": "Illustrations & Diagrams",
+      "url": "https://thariqs.github.io/html-effectiveness/10-svg-illustrations.html",
+      "recipe": "research-explainer",
+      "expectedSheets": ["TLDR", "Steps", "Links"]
+    },
+    {
+      "id": "11-status-report",
+      "title": "Weekly status",
+      "category": "Reports",
+      "url": "https://thariqs.github.io/html-effectiveness/11-status-report.html",
+      "recipe": "status-report",
+      "expectedSheets": ["Highlights", "Metrics", "Carryover"]
+    },
+    {
+      "id": "12-incident-report",
+      "title": "Incident timeline",
+      "category": "Reports",
+      "url": "https://thariqs.github.io/html-effectiveness/12-incident-report.html",
+      "recipe": "incident-report",
+      "expectedSheets": ["Timeline", "Impact", "Action Items"]
+    },
+    {
+      "id": "13-flowchart-diagram",
+      "title": "Annotated flowchart",
+      "category": "Illustrations & Diagrams",
+      "url": "https://thariqs.github.io/html-effectiveness/13-flowchart-diagram.html",
+      "recipe": "research-explainer",
+      "expectedSheets": ["TLDR", "Steps", "FAQ"]
+    },
+    {
+      "id": "14-research-feature-explainer",
+      "title": "How a feature works",
+      "category": "Research & Learning",
+      "url": "https://thariqs.github.io/html-effectiveness/14-research-feature-explainer.html",
+      "recipe": "research-explainer",
+      "expectedSheets": ["TLDR", "Steps", "Glossary", "FAQ"]
+    },
+    {
+      "id": "15-research-concept-explainer",
+      "title": "Concept explainer",
+      "category": "Research & Learning",
+      "url": "https://thariqs.github.io/html-effectiveness/15-research-concept-explainer.html",
+      "recipe": "research-explainer",
+      "expectedSheets": ["TLDR", "Steps", "Glossary", "FAQ"]
+    },
+    {
+      "id": "16-implementation-plan",
+      "title": "Implementation plan",
+      "category": "Exploration & Planning",
+      "url": "https://thariqs.github.io/html-effectiveness/16-implementation-plan.html",
+      "recipe": "implementation-plan",
+      "expectedSheets": ["Milestones", "Data Flow", "Risks", "Open Questions"]
+    },
+    {
+      "id": "17-pr-writeup",
+      "title": "PR writeup for reviewers",
+      "category": "Code Review & Understanding",
+      "url": "https://thariqs.github.io/html-effectiveness/17-pr-writeup.html",
+      "recipe": "annotated-pr-review",
+      "expectedSheets": ["Findings", "Files", "Suggested Next Steps"]
+    },
+    {
+      "id": "18-editor-triage-board",
+      "title": "Ticket triage board",
+      "category": "Custom Editing Interfaces",
+      "url": "https://thariqs.github.io/html-effectiveness/18-editor-triage-board.html",
+      "recipe": "custom-editor-export",
+      "expectedSheets": ["Editor State", "Exports", "Validation"]
+    },
+    {
+      "id": "19-editor-feature-flags",
+      "title": "Feature flag editor",
+      "category": "Custom Editing Interfaces",
+      "url": "https://thariqs.github.io/html-effectiveness/19-editor-feature-flags.html",
+      "recipe": "custom-editor-export",
+      "expectedSheets": ["Editor State", "Exports", "Validation"]
+    },
+    {
+      "id": "20-editor-prompt-tuner",
+      "title": "Prompt tuner",
+      "category": "Custom Editing Interfaces",
+      "url": "https://thariqs.github.io/html-effectiveness/20-editor-prompt-tuner.html",
+      "recipe": "custom-editor-export",
+      "expectedSheets": ["Editor State", "Exports", "Validation"]
+    }
+  ]
+}

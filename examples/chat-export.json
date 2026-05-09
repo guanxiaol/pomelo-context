@@ -1,0 +1,16 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "I want to migrate this chat into a durable context file without spending many tokens next time."
+    },
+    {
+      "role": "assistant",
+      "content": "Create a Context Workbook with a manifest first, then messages, claims, decisions, and source links as separate sheets."
+    },
+    {
+      "role": "user",
+      "content": "Make sure another agent can read only the important ranges."
+    }
+  ]
+}

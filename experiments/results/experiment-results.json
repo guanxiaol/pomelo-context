@@ -1,0 +1,156 @@
+{
+  "rows": [
+    {
+      "scenarioId": "implementation-plan",
+      "scenarioTitle": "Checkout Animation Implementation Plan",
+      "method": "markdown-full",
+      "tokens": 1796,
+      "accuracy": 1,
+      "factsFound": 5,
+      "factsTotal": 5,
+      "structureScore": 50,
+      "efficiency": 0.5567928730512249
+    },
+    {
+      "scenarioId": "implementation-plan",
+      "scenarioTitle": "Checkout Animation Implementation Plan",
+      "method": "html-source",
+      "tokens": 2340,
+      "accuracy": 1,
+      "factsFound": 5,
+      "factsTotal": 5,
+      "structureScore": 90,
+      "efficiency": 0.42735042735042733
+    },
+    {
+      "scenarioId": "implementation-plan",
+      "scenarioTitle": "Checkout Animation Implementation Plan",
+      "method": "cwb-small",
+      "tokens": 1037,
+      "accuracy": 1,
+      "factsFound": 5,
+      "factsTotal": 5,
+      "structureScore": 100,
+      "efficiency": 0.9643201542912246
+    },
+    {
+      "scenarioId": "pr-review",
+      "scenarioTitle": "Streaming Backpressure PR Review",
+      "method": "markdown-full",
+      "tokens": 1766,
+      "accuracy": 1,
+      "factsFound": 5,
+      "factsTotal": 5,
+      "structureScore": 50,
+      "efficiency": 0.5662514156285391
+    },
+    {
+      "scenarioId": "pr-review",
+      "scenarioTitle": "Streaming Backpressure PR Review",
+      "method": "html-source",
+      "tokens": 2310,
+      "accuracy": 1,
+      "factsFound": 5,
+      "factsTotal": 5,
+      "structureScore": 90,
+      "efficiency": 0.4329004329004329
+    },
+    {
+      "scenarioId": "pr-review",
+      "scenarioTitle": "Streaming Backpressure PR Review",
+      "method": "cwb-small",
+      "tokens": 966,
+      "accuracy": 1,
+      "factsFound": 5,
+      "factsTotal": 5,
+      "structureScore": 100,
+      "efficiency": 1.0351966873706004
+    },
+    {
+      "scenarioId": "custom-editor",
+      "scenarioTitle": "Feature Flag Editor Export",
+      "method": "markdown-full",
+      "tokens": 1762,
+      "accuracy": 1,
+      "factsFound": 5,
+      "factsTotal": 5,
+      "structureScore": 50,
+      "efficiency": 0.5675368898978433
+    },
+    {
+      "scenarioId": "custom-editor",
+      "scenarioTitle": "Feature Flag Editor Export",
+      "method": "html-source",
+      "tokens": 2306,
+      "accuracy": 1,
+      "factsFound": 5,
+      "factsTotal": 5,
+      "structureScore": 90,
+      "efficiency": 0.4336513443191674
+    },
+    {
+      "scenarioId": "custom-editor",
+      "scenarioTitle": "Feature Flag Editor Export",
+      "method": "cwb-small",
+      "tokens": 969,
+      "accuracy": 1,
+      "factsFound": 5,
+      "factsTotal": 5,
+      "structureScore": 100,
+      "efficiency": 1.0319917440660475
+    },
+    {
+      "scenarioId": "web-archive",
+      "scenarioTitle": "HTML Artifact Article Archive",
+      "method": "markdown-full",
+      "tokens": 1792,
+      "accuracy": 1,
+      "factsFound": 5,
+      "factsTotal": 5,
+      "structureScore": 50,
+      "efficiency": 0.5580357142857143
+    },
+    {
+      "scenarioId": "web-archive",
+      "scenarioTitle": "HTML Artifact Article Archive",
+      "method": "html-source",
+      "tokens": 2336,
+      "accuracy": 1,
+      "factsFound": 5,
+      "factsTotal": 5,
+      "structureScore": 90,
+      "efficiency": 0.4280821917808219
+    },
+    {
+      "scenarioId": "web-archive",
+      "scenarioTitle": "HTML Artifact Article Archive",
+      "method": "cwb-small",
+      "tokens": 980,
+      "accuracy": 1,
+      "factsFound": 5,
+      "factsTotal": 5,
+      "structureScore": 100,
+      "efficiency": 1.0204081632653061
+    }
+  ],
+  "averages": {
+    "markdown-full": {
+      "tokens": 1779,
+      "accuracy": 1,
+      "structureScore": 50,
+      "efficiency": 0.5621542232158304
+    },
+    "html-source": {
+      "tokens": 2323,
+      "accuracy": 1,
+      "structureScore": 90,
+      "efficiency": 0.4304960990877124
+    },
+    "cwb-small": {
+      "tokens": 988,
+      "accuracy": 1,
+      "structureScore": 100,
+      "efficiency": 1.0129791872482947
+    }
+  }
+}
