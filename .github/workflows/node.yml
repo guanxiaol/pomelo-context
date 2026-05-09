@@ -1,0 +1,35 @@
+name: Node CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Run tests
+        run: npm test
+
+      - name: Regenerate experiment artifacts
+        run: npm run experiment
+
+      - name: Regenerate experiment SVG
+        run: npm run chart
+
+      - name: Verify generated artifacts are committed
+        run: git diff --exit-code
