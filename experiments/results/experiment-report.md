@@ -1,5 +1,9 @@
 # Context Workbook Experiment Report
 
+![Pomelo Context Workbook experiment results](../../assets/experiment-results.png)
+
+中文摘要：在 4 个确定性样例场景中，Pomelo CWB small-read 用 `988` 平均 token 达到 `100.0%` 必要事实覆盖准确率，比完整 Markdown 少 `44.5%` token，比原始 HTML source 少 `57.5%` token。该实验用于验证方向，可复现，但不代表所有材料的绝对结论。
+
 ## Method
 
 This experiment compares three context-transfer paths:

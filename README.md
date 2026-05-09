@@ -1,6 +1,16 @@
-# Pomelo Context Workbook
+# Pomelo Context Workbook / 柚子上下文工作簿
 
-Pomelo Context Workbook (`cwb`) is a low-token artifact protocol for AI agents and humans. It turns long web pages, chat logs, Markdown notes, CSV/XLSX-like tables, and code folders into a `.cwb` bundle:
+![Pomelo Context Workbook experiment results](assets/experiment-results.png)
+
+## 中文简介
+
+Pomelo Context Workbook（`cwb`）是一个面向 AI Agent 和人的 **低 Token 上下文工作簿协议**。它把网页、聊天记录、Markdown 文档、表格、图片、代码上下文和可交互 HTML artifact 转成一个 `.cwb` bundle，让 AI 先读索引，再按 sheet/range 精准读取信息；人类则可以直接打开 Excel、HTML 或 Markdown 版本长期归档。
+
+它的目标不是替代 HTML 或 Markdown，而是补上二者在 Agent 场景里的缺口：**省 token、少丢信息、可索引、可切片、可迁移、可视化**。第一轮确定性实验显示，在 4 个场景、每个场景 5 个必要事实的样例中，`cwb-small` 以 `988` 平均 token 达到 `100%` 事实覆盖准确率，相比完整 Markdown 少 `44.5%` token，相比原始 HTML source 少 `57.5%` token。
+
+## English Overview
+
+Pomelo Context Workbook (`cwb`) is a **low-token context workbook protocol** for AI agents and humans. It turns long web pages, chat logs, Markdown notes, CSV/XLSX-like tables, images, code folders, and interactive HTML artifacts into a `.cwb` bundle:
 
 - `manifest.json` for agent-first indexing and token budgeting.
 - `workbook.xlsx` for human reading and durable sharing.
@@ -8,9 +18,17 @@ Pomelo Context Workbook (`cwb`) is a low-token artifact protocol for AI agents a
 - `notes/*.md` for summaries and prompt recipes.
 - `assets/` for optional HTML snapshots and source artifacts.
 
-The idea is inspired by Thariq Shihipar's HTML artifact examples: HTML is great for rich reading and interaction; Pomelo adds indexing, slicing, migration, and agent-friendly selective reads.
+The point is not to replace HTML or Markdown. HTML is great for rich reading and interaction; Markdown is excellent for linear writing. Pomelo adds indexing, slicing, migration, and agent-friendly selective reads so a model can continue from a large artifact without reading the whole artifact.
 
-See `ACKNOWLEDGEMENTS.md` for the full source attribution and references.
+## Keywords / 关键词
+
+**English:** AI context engineering, token optimization, agent memory, context workbook, HTML artifacts, Markdown alternative, XLSX archive, Claude Code skill, Cursor rules, web archive, chat migration, code context management.
+
+**中文：** AI 上下文工程、Token 节省、Agent 记忆、上下文工作簿、HTML Artifact、Markdown 替代方案、Excel 归档、Claude Code Skill、Cursor 规则、网页归档、聊天记录迁移、代码上下文管理。
+
+The idea is inspired by Thariq Shihipar's HTML artifact examples. See `ACKNOWLEDGEMENTS.md` for the full source attribution and references.
+
+For a longer bilingual introduction, see `docs/introduction.zh-en.md`.
 
 ## Quick Start
 

@@ -292,6 +292,12 @@ function scenarioToHtml(scenario: ExperimentScenario): string {
 }
 
 function experimentToMarkdown(output: ExperimentOutput): string {
+  const markdown = output.averages["markdown-full"];
+  const html = output.averages["html-source"];
+  const cwb = output.averages["cwb-small"];
+  const scenarioCount = new Set(output.rows.map((row) => row.scenarioId)).size;
+  const savingVsMarkdown = (1 - cwb.tokens / markdown.tokens) * 100;
+  const savingVsHtml = (1 - cwb.tokens / html.tokens) * 100;
   const summaryRows = methodOrder().map((method) => {
     const avg = output.averages[method];
     return `| ${method} | ${avg.tokens.toFixed(0)} | ${(avg.accuracy * 100).toFixed(1)}% | ${avg.structureScore.toFixed(1)} | ${avg.efficiency.toFixed(3)} |`;
@@ -300,6 +306,10 @@ function experimentToMarkdown(output: ExperimentOutput): string {
     `| ${row.scenarioId} | ${row.method} | ${row.tokens} | ${(row.accuracy * 100).toFixed(1)}% | ${row.factsFound}/${row.factsTotal} | ${row.structureScore} | ${row.efficiency.toFixed(3)} |`
   ).join("\n");
   return `# Context Workbook Experiment Report
+
+![Pomelo Context Workbook experiment results](../../assets/experiment-results.png)
+
+中文摘要：在 ${scenarioCount} 个确定性样例场景中，Pomelo CWB small-read 用 \`${cwb.tokens.toFixed(0)}\` 平均 token 达到 \`${(cwb.accuracy * 100).toFixed(1)}%\` 必要事实覆盖准确率，比完整 Markdown 少 \`${savingVsMarkdown.toFixed(1)}%\` token，比原始 HTML source 少 \`${savingVsHtml.toFixed(1)}%\` token。该实验用于验证方向，可复现，但不代表所有材料的绝对结论。
 
 ## Method
 
@@ -330,6 +340,12 @@ HTML source preserves facts well and improves visual structure for humans, but r
 }
 
 function experimentToHtml(output: ExperimentOutput): string {
+  const markdown = output.averages["markdown-full"];
+  const html = output.averages["html-source"];
+  const cwb = output.averages["cwb-small"];
+  const scenarioCount = new Set(output.rows.map((row) => row.scenarioId)).size;
+  const savingVsMarkdown = (1 - cwb.tokens / markdown.tokens) * 100;
+  const savingVsHtml = (1 - cwb.tokens / html.tokens) * 100;
   const tokenData = methodOrder().map((method) => ({ label: method, value: output.averages[method].tokens }));
   const accuracyData = methodOrder().map((method) => ({ label: method, value: output.averages[method].accuracy * 100 }));
   const efficiencyData = methodOrder().map((method) => ({ label: method, value: output.averages[method].efficiency }));
@@ -349,14 +365,17 @@ function experimentToHtml(output: ExperimentOutput): string {
     th, td { border-bottom: 1px solid #e7e5df; padding: 8px; text-align: left; }
     th { background: #f0eee6; }
     svg { width: 100%; height: auto; }
+    .hero-image { width: min(100%, 1100px); border: 1px solid #d7d7d2; border-radius: 8px; display: block; }
   </style>
 </head>
 <body>
   <header>
     <h1>Context Workbook Experiment Report</h1>
     <p>Markdown vs raw HTML artifact vs Context Workbook small-read path.</p>
+    <p>中文摘要：${scenarioCount} 个确定性样例中，Pomelo CWB small-read 平均 ${cwb.tokens.toFixed(0)} tokens，事实覆盖准确率 ${(cwb.accuracy * 100).toFixed(1)}%，比完整 Markdown 少 ${savingVsMarkdown.toFixed(1)}% token，比原始 HTML source 少 ${savingVsHtml.toFixed(1)}% token。</p>
   </header>
   <main>
+    <section><h2>Experiment Image / 实验图</h2><img class="hero-image" src="../../assets/experiment-results.png" alt="Pomelo Context Workbook experiment results"></section>
     <section><h2>Average Token Cost</h2>${barChart(tokenData, "tokens", false)}</section>
     <section><h2>Fact Accuracy</h2>${barChart(accuracyData, "%", true)}</section>
     <section><h2>Accuracy per 1K Tokens</h2>${barChart(efficiencyData, "score", false)}</section>
