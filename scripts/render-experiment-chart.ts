@@ -17,6 +17,7 @@ const root = resolve(new URL("..", import.meta.url).pathname);
 const csvPath = resolve(root, "experiments/results/experiment-summary.csv");
 const chartPath = resolve(root, "assets/experiment-results.svg");
 const socialPath = resolve(root, "assets/social-preview.svg");
+const paperPath = resolve(root, "assets/paper-results.svg");
 
 function parseCsv(text: string): Row[] {
   const [headerLine, ...lines] = text.trim().split(/\r?\n/);
@@ -51,6 +52,10 @@ function escapeXml(value: string): string {
     .replaceAll('"', "&quot;");
 }
 
+function cleanSvg(value: string): string {
+  return value.replace(/[ \t]+$/gm, "");
+}
+
 const rows = parseCsv(readFileSync(csvPath, "utf8"));
 const methods = [
   { id: "markdown-full", label: "Markdown full read", zh: "完整 Markdown", color: "#7c8a3a" },
@@ -76,6 +81,10 @@ const maxEfficiency = Math.max(...averages.map((method) => method.efficiency));
 
 function bar(x: number, y: number, width: number, height: number, color: string): string {
   return `<rect x="${x}" y="${y}" width="${width.toFixed(1)}" height="${height}" rx="8" fill="${color}"/>`;
+}
+
+function axisLabel(value: number): string {
+  return Number.isInteger(value) ? String(value) : value.toFixed(1);
 }
 
 const rowsSvg = averages.map((method, index) => {
@@ -204,8 +213,158 @@ const socialSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="
 </svg>
 `;
 
+const scenarios = Array.from(new Map(rows.map((row) => [row.scenarioId, row.scenarioTitle])).entries());
+const shortScenarioLabels = ["Plan", "PR", "Editor", "Web"];
+const methodById = new Map(methods.map((method) => [method.id, method]));
+
+function rowFor(scenarioId: string, methodId: string): Row {
+  const row = rows.find((candidate) => candidate.scenarioId === scenarioId && candidate.method === methodId);
+  if (!row) throw new Error(`Missing experiment row for ${scenarioId}/${methodId}`);
+  return row;
+}
+
+function linePanel(): string {
+  const x0 = 88;
+  const y0 = 262;
+  const width = 430;
+  const height = 150;
+  const max = Math.ceil(Math.max(...rows.map((row) => row.tokens)) / 500) * 500;
+  const xFor = (index: number) => x0 + (index / (scenarios.length - 1)) * width;
+  const yFor = (value: number) => y0 + height - (value / max) * height;
+  const grid = [0, 1000, 2000, max].map((tick) => `
+    <line x1="${x0}" y1="${yFor(tick)}" x2="${x0 + width}" y2="${yFor(tick)}" class="grid"/>
+    <text x="${x0 - 12}" y="${yFor(tick) + 5}" text-anchor="end" class="tick">${tick}</text>`).join("");
+  const lines = methods.map((method) => {
+    const points = scenarios.map(([scenarioId], index) => `${xFor(index)},${yFor(rowFor(scenarioId, method.id).tokens)}`).join(" ");
+    const dots = scenarios.map(([scenarioId], index) => `<circle cx="${xFor(index)}" cy="${yFor(rowFor(scenarioId, method.id).tokens)}" r="5" fill="${method.color}"/>`).join("");
+    return `<polyline points="${points}" fill="none" stroke="${method.color}" stroke-width="4" stroke-linejoin="round"/>
+    ${dots}`;
+  }).join("");
+  const xLabels = shortScenarioLabels.map((label, index) => `<text x="${xFor(index)}" y="${y0 + height + 28}" text-anchor="middle" class="tick">${label}</text>`).join("");
+  return `<g transform="translate(0 0)">
+    <text x="60" y="92" class="panelTitle">A. Token cost by scenario</text>
+    <text x="60" y="118" class="panelSub">Lower is better. CWB reads manifest + selected ranges.</text>
+    ${grid}
+    <line x1="${x0}" y1="${y0}" x2="${x0}" y2="${y0 + height}" class="axis"/>
+    <line x1="${x0}" y1="${y0 + height}" x2="${x0 + width}" y2="${y0 + height}" class="axis"/>
+    ${lines}
+    ${xLabels}
+    <text x="${x0 + width / 2}" y="${y0 + height + 58}" text-anchor="middle" class="axisText">scenario</text>
+    <text x="${x0 - 56}" y="${y0 + height / 2}" text-anchor="middle" class="axisText" transform="rotate(-90 ${x0 - 56} ${y0 + height / 2})">tokens</text>
+  </g>`;
+}
+
+function scatterPanel(): string {
+  const x0 = 690;
+  const y0 = 262;
+  const width = 350;
+  const height = 150;
+  const tokenMin = 800;
+  const tokenMax = 2500;
+  const effMin = 0.35;
+  const effMax = 1.1;
+  const xFor = (tokens: number) => x0 + ((tokens - tokenMin) / (tokenMax - tokenMin)) * width;
+  const yFor = (efficiency: number) => y0 + height - ((efficiency - effMin) / (effMax - effMin)) * height;
+  const points = averages.map((method) => {
+    const radius = method.id === "cwb-small" ? 10 : 8;
+    return `<circle cx="${xFor(method.tokens)}" cy="${yFor(method.efficiency)}" r="${radius}" fill="${method.color}"/>
+    <text x="${xFor(method.tokens) + 14}" y="${yFor(method.efficiency) + 5}" class="pointLabel">${escapeXml(method.label.replace("Pomelo ", ""))}</text>`;
+  }).join("");
+  return `<g>
+    <text x="648" y="92" class="panelTitle">B. Accuracy per 1K tokens</text>
+    <text x="648" y="118" class="panelSub">Up-left means more conveyed facts per token.</text>
+    <line x1="${x0}" y1="${y0}" x2="${x0}" y2="${y0 + height}" class="axis"/>
+    <line x1="${x0}" y1="${y0 + height}" x2="${x0 + width}" y2="${y0 + height}" class="axis"/>
+    <line x1="${x0}" y1="${yFor(1)}" x2="${x0 + width}" y2="${yFor(1)}" class="grid dashed"/>
+    <text x="${x0 - 8}" y="${yFor(1) + 5}" text-anchor="end" class="tick">1.0</text>
+    <text x="${x0}" y="${y0 + height + 28}" text-anchor="middle" class="tick">${tokenMin}</text>
+    <text x="${x0 + width}" y="${y0 + height + 28}" text-anchor="middle" class="tick">${tokenMax}</text>
+    <text x="${x0 + width / 2}" y="${y0 + height + 58}" text-anchor="middle" class="axisText">average tokens</text>
+    <text x="${x0 - 60}" y="${y0 + height / 2}" text-anchor="middle" class="axisText" transform="rotate(-90 ${x0 - 60} ${y0 + height / 2})">accuracy / 1K tokens</text>
+    ${points}
+  </g>`;
+}
+
+function structurePanel(): string {
+  const x0 = 88;
+  const y0 = 520;
+  const maxWidth = 320;
+  const rowsOut = averages.map((method, index) => {
+    const y = y0 + index * 44;
+    const width = (method.structure / 100) * maxWidth;
+    return `<text x="${x0}" y="${y + 18}" class="tick">${escapeXml(method.label)}</text>
+    <rect x="${x0 + 172}" y="${y}" width="${width}" height="22" rx="5" fill="${method.color}"/>
+    <text x="${x0 + 184 + width}" y="${y + 17}" class="pointLabel">${axisLabel(method.structure)}</text>`;
+  }).join("");
+  return `<g>
+    <text x="60" y="482" class="panelTitle">C. Structure score</text>
+    <text x="60" y="506" class="panelSub">Navigation proxy from 0 to 100.</text>
+    ${rowsOut}
+  </g>`;
+}
+
+function savingsPanel(): string {
+  const x0 = 704;
+  const y0 = 520;
+  const values = [
+    { label: "vs Markdown", value: savingVsMarkdown, color: "#7c8a3a" },
+    { label: "vs HTML source", value: savingVsHtml, color: "#c15f3f" },
+  ];
+  const rowsOut = values.map((entry, index) => {
+    const y = y0 + index * 54;
+    const width = (entry.value / 65) * 260;
+    return `<text x="${x0}" y="${y + 20}" class="tick">${entry.label}</text>
+    <rect x="${x0 + 150}" y="${y}" width="${width}" height="26" rx="6" fill="${entry.color}"/>
+    <text x="${x0 + 164 + width}" y="${y + 20}" class="pointLabel">${entry.value.toFixed(1)}%</text>`;
+  }).join("");
+  const legend = methods.map((method, index) => `<circle cx="${x0 + index * 142}" cy="668" r="6" fill="${method.color}"/>
+    <text x="${x0 + 12 + index * 142}" y="673" class="legend">${escapeXml(method.label)}</text>`).join("");
+  return `<g>
+    <text x="648" y="482" class="panelTitle">D. Token savings</text>
+    <text x="648" y="506" class="panelSub">CWB small-read relative to full reads.</text>
+    ${rowsOut}
+    ${legend}
+  </g>`;
+}
+
+const paperSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Pomelo Context Workbook paper-style benchmark figure</title>
+  <desc id="desc">Scientific multi-panel benchmark chart for token cost, efficiency, structure, and savings.</desc>
+  <style>
+    .bg { fill: #ffffff; }
+    .rule { stroke: #172a2a; stroke-width: 1.2; }
+    .axis { stroke: #172a2a; stroke-width: 1.5; }
+    .grid { stroke: #d7d7d2; stroke-width: 1; }
+    .dashed { stroke-dasharray: 5 5; }
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif; fill: #172a2a; }
+    .title { font-size: 30px; font-weight: 830; }
+    .subtitle { font-size: 16px; font-weight: 600; fill: #53615a; }
+    .panelTitle { font-size: 20px; font-weight: 830; }
+    .panelSub { font-size: 13px; font-weight: 600; fill: #53615a; }
+    .tick { font-size: 12px; font-weight: 650; fill: #53615a; }
+    .axisText { font-size: 12px; font-weight: 750; fill: #53615a; }
+    .pointLabel { font-size: 12px; font-weight: 750; }
+    .legend { font-size: 11px; font-weight: 700; fill: #53615a; }
+    .caption { font-size: 13px; font-weight: 600; fill: #53615a; }
+  </style>
+  <rect class="bg" width="1200" height="760"/>
+  <text x="60" y="48" class="title">Figure 1. Selective workbook reads preserve facts with lower token cost</text>
+  <text x="60" y="76" class="subtitle">Deterministic benchmark across ${scenarios.length} artifact scenarios; each scenario contains 5 required facts.</text>
+  <line x1="60" y1="132" x2="1140" y2="132" class="rule"/>
+  <line x1="60" y1="452" x2="1140" y2="452" class="rule"/>
+  <line x1="590" y1="132" x2="590" y2="700" class="rule"/>
+  ${linePanel()}
+  ${scatterPanel()}
+  ${structurePanel()}
+  ${savingsPanel()}
+  <text x="60" y="730" class="caption">Caption: CWB small-read means reading manifest.json plus suggested CSV ranges, not the full workbook. Accuracy is exact required-fact coverage, not model judgment.</text>
+</svg>
+`;
+
 mkdirSync(dirname(chartPath), { recursive: true });
-writeFileSync(chartPath, svg);
-writeFileSync(socialPath, socialSvg);
+writeFileSync(chartPath, cleanSvg(svg));
+writeFileSync(socialPath, cleanSvg(socialSvg));
+writeFileSync(paperPath, cleanSvg(paperSvg));
 console.log(`Wrote ${chartPath}`);
 console.log(`Wrote ${socialPath}`);
+console.log(`Wrote ${paperPath}`);

@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive Pomelo Context Workbook demo: inspect low-token benchmark results and simulate agent range reads.">
+  <title>Pomelo Context Workbook Interactive Demo</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172a2a;
+      --muted: #53615a;
+      --line: #d9d4c7;
+      --paper: #fbfaf6;
+      --panel: #ffffff;
+      --green: #2f8f83;
+      --olive: #7c8a3a;
+      --clay: #c15f3f;
+      --blue: #5c75a4;
+      --amber: #f4d079;
+    }
+    * { box-sizing: border-box; }
+    html, body { overflow-x: hidden; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+    }
+    header {
+      border-bottom: 1px solid var(--line);
+      background: var(--panel);
+    }
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 22px 22px;
+    }
+    .topbar {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 18px;
+      align-items: center;
+    }
+    .mark {
+      width: 58px;
+      height: 58px;
+      flex: none;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+    .subtitle {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 650;
+      overflow-wrap: anywhere;
+    }
+    .links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    a, button, select {
+      font: inherit;
+    }
+    .link, button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      min-height: 38px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 750;
+      cursor: pointer;
+    }
+    button[aria-pressed="true"], .link.primary {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+    }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px 22px 58px;
+      display: grid;
+      gap: 22px;
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      min-height: 104px;
+    }
+    .metric b {
+      display: block;
+      font-size: 34px;
+      line-height: 1;
+    }
+    .metric span {
+      display: block;
+      color: var(--muted);
+      margin-top: 8px;
+      font-weight: 700;
+    }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+    }
+    .sectionHead {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    h2 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+    .note {
+      color: var(--muted);
+      margin: 4px 0 0;
+      font-weight: 620;
+    }
+    .controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .chartGrid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, .8fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+    .chartBox {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      min-height: 360px;
+      overflow: hidden;
+    }
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .legend {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+    .legendRow {
+      display: grid;
+      grid-template-columns: 12px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      font-weight: 720;
+      color: var(--muted);
+    }
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .reader {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 18px;
+    }
+    label {
+      display: grid;
+      gap: 7px;
+      color: var(--muted);
+      font-weight: 760;
+      margin-bottom: 14px;
+    }
+    select, input[type="range"] {
+      width: 100%;
+    }
+    select {
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 6px 8px;
+      background: #fff;
+      color: var(--ink);
+      font-weight: 700;
+    }
+    pre {
+      margin: 0;
+      min-height: 240px;
+      overflow: auto;
+      background: #172a2a;
+      color: #edf6f2;
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .protocol {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      min-height: 120px;
+    }
+    .step strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+    .step span {
+      color: var(--muted);
+      font-weight: 650;
+    }
+    @media (max-width: 860px) {
+      .topbar, .chartGrid, .reader, .protocol {
+        grid-template-columns: 1fr;
+      }
+      .sectionHead {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .links, .controls {
+        justify-content: flex-start;
+      }
+      .controls button {
+        flex: 1 1 108px;
+      }
+      .metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 560px) {
+      .wrap, main {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+      .controls {
+        flex-direction: column;
+      }
+      .controls button {
+        width: 100%;
+      }
+      .chartBox {
+        padding: 8px;
+      }
+      h1 {
+        font-size: 28px;
+      }
+      .subtitle, .note {
+        max-width: 30ch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap topbar">
+      <svg class="mark" viewBox="0 0 256 256" role="img" aria-label="Pomelo mark">
+        <rect width="256" height="256" rx="58" fill="#fbfaf6"/>
+        <path d="M125 32 C154 -2 200 17 195 63 C166 62 142 50 125 32Z" fill="#2f8f83"/>
+        <path d="M198 77 C235 113 239 169 205 207 C167 249 96 245 61 200 C27 156 36 90 81 62 C117 39 162 45 198 77Z" fill="#f4d079"/>
+        <path d="M186 86 C215 116 216 162 191 191 C160 226 105 222 78 188 C52 154 59 104 92 81 C119 62 157 65 186 86Z" fill="#f7f0cf"/>
+        <g fill="none" stroke="#172a2a" stroke-width="8" stroke-linecap="round">
+          <path d="M96 91 C123 119 129 158 107 197"/>
+          <path d="M134 75 C138 113 138 162 128 211"/>
+          <path d="M173 95 C153 121 148 158 160 195"/>
+          <path d="M88 126 H190"/>
+          <path d="M96 165 H181"/>
+        </g>
+      </svg>
+      <div>
+        <h1>Pomelo Context Workbook</h1>
+        <p class="subtitle">Interactive benchmark and agent range-read simulator. 交互式实验结果与 Agent 按需读取模拟器。</p>
+      </div>
+      <div class="links">
+        <a class="link primary" href="https://github.com/guanxiaol/pomelo-context">GitHub</a>
+        <a class="link" href="https://github.com/guanxiaol/pomelo-context/blob/main/README.md">README</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="metrics">
+      <div class="metric"><b>988</b><span>CWB avg tokens</span></div>
+      <div class="metric"><b>44.5%</b><span>less than Markdown</span></div>
+      <div class="metric"><b>57.5%</b><span>less than HTML source</span></div>
+      <div class="metric"><b>100%</b><span>required fact coverage</span></div>
+    </div>
+
+    <section>
+      <div class="sectionHead">
+        <div>
+          <h2>Benchmark Explorer</h2>
+          <p class="note">Switch metric views to see why selective workbook reads are cheaper for agents.</p>
+        </div>
+        <div class="controls" id="metricControls">
+          <button type="button" data-metric="tokens" aria-pressed="true">Tokens</button>
+          <button type="button" data-metric="efficiency" aria-pressed="false">Efficiency</button>
+          <button type="button" data-metric="structureScore" aria-pressed="false">Structure</button>
+        </div>
+      </div>
+      <div class="chartGrid">
+        <div class="chartBox">
+          <svg id="chart" viewBox="0 0 720 360" role="img" aria-label="Benchmark chart"></svg>
+        </div>
+        <div class="legend" id="legend"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sectionHead">
+        <div>
+          <h2>Agent Range-Read Simulator</h2>
+          <p class="note">A `.cwb` reader starts with the manifest, then pulls only relevant sheet ranges.</p>
+        </div>
+      </div>
+      <div class="reader">
+        <div>
+          <label>
+            Sheet
+            <select id="sheetSelect">
+              <option value="Manifest">Manifest</option>
+              <option value="Sections">Sections</option>
+              <option value="Risks">Risks</option>
+              <option value="Links">Links</option>
+            </select>
+          </label>
+          <label>
+            Token budget: <span id="budgetValue">small</span>
+            <input id="budgetRange" type="range" min="0" max="2" step="1" value="0">
+          </label>
+        </div>
+        <pre id="rangeOutput"></pre>
+      </div>
+    </section>
+
+    <section>
+      <div class="sectionHead">
+        <div>
+          <h2>Protocol Path</h2>
+          <p class="note">The workbook is a context container, not just a prettier document.</p>
+        </div>
+      </div>
+      <div class="protocol">
+        <div class="step"><strong>1. Pack</strong><span>Web, chat, code, reports, tables, images.</span></div>
+        <div class="step"><strong>2. Index</strong><span>Manifest records sources, sheets, ranges, budgets.</span></div>
+        <div class="step"><strong>3. Slice</strong><span>CSV sheets expose low-token range reads.</span></div>
+        <div class="step"><strong>4. Archive</strong><span>XLSX, HTML, notes, and assets stay human-readable.</span></div>
+        <div class="step"><strong>5. Resume</strong><span>Agents continue from the relevant slice.</span></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const rows = [
+      ["implementation-plan", "Plan", "Markdown full read", "markdown-full", 1796, 1, 50, 0.5568],
+      ["implementation-plan", "Plan", "Raw HTML source", "html-source", 2340, 1, 90, 0.4274],
+      ["implementation-plan", "Plan", "Pomelo CWB small-read", "cwb-small", 1037, 1, 100, 0.9643],
+      ["pr-review", "PR", "Markdown full read", "markdown-full", 1766, 1, 50, 0.5663],
+      ["pr-review", "PR", "Raw HTML source", "html-source", 2310, 1, 90, 0.4329],
+      ["pr-review", "PR", "Pomelo CWB small-read", "cwb-small", 966, 1, 100, 1.0352],
+      ["custom-editor", "Editor", "Markdown full read", "markdown-full", 1762, 1, 50, 0.5675],
+      ["custom-editor", "Editor", "Raw HTML source", "html-source", 2306, 1, 90, 0.4337],
+      ["custom-editor", "Editor", "Pomelo CWB small-read", "cwb-small", 969, 1, 100, 1.0320],
+      ["web-archive", "Web", "Markdown full read", "markdown-full", 1792, 1, 50, 0.5580],
+      ["web-archive", "Web", "Raw HTML source", "html-source", 2336, 1, 90, 0.4281],
+      ["web-archive", "Web", "Pomelo CWB small-read", "cwb-small", 980, 1, 100, 1.0204]
+    ].map(([scenarioId, scenario, label, method, tokens, accuracy, structureScore, efficiency]) => ({ scenarioId, scenario, label, method, tokens, accuracy, structureScore, efficiency }));
+
+    const colors = {
+      "markdown-full": "#7c8a3a",
+      "html-source": "#c15f3f",
+      "cwb-small": "#2f8f83"
+    };
+    const methodLabels = {
+      "markdown-full": "Markdown full read",
+      "html-source": "Raw HTML source",
+      "cwb-small": "Pomelo CWB small-read"
+    };
+    const metricLabels = {
+      tokens: ["Tokens", "lower is better"],
+      efficiency: ["Accuracy per 1K tokens", "higher is better"],
+      structureScore: ["Structure score", "higher is better"]
+    };
+    const snippets = {
+      Manifest: {
+        small: `manifest.json\nsource: examples/web-archive.md\nrecipe: web-or-chat-archive\nrecommendedRead: Manifest, Sections A1:E8, Links A1:D8\nbudget: small\nestimatedTokens: 988`,
+        medium: `manifest.json\nbundle: demo.cwb\nsheets: Overview, Sections, Text Blocks, Images, Links\nnotes: summary.md, prompt-recipes.md\nassets: artifact.html, source snapshots\nestimatedTokens: 1280`,
+        large: `manifest.json\nreadPlan:\n  1. inspect sheet inventory\n  2. read Sections A1:E20\n  3. read Links A1:D20\n  4. open notes only if the task needs decisions\nestimatedTokens: 1640`
+      },
+      Sections: {
+        small: `sheet: Sections\nrange: A1:E8\n\nrow,title,type,priority,summary\n1,Claim,heading,high,HTML is rich but source is token-heavy\n2,Method,paragraph,high,CWB separates index, sheets, notes, assets\n3,Result,table,high,CWB small-read preserves 5/5 facts`,
+        medium: `sheet: Sections\nrange: A1:E16\n\nAdds source attribution, benchmark method, limitations, and next steps.\nUse when the agent needs narrative context but not the full article.`,
+        large: `sheet: Sections\nrange: A1:E40\n\nIncludes all section summaries plus low-priority prose markers.\nUse for article rewriting, translation, or deep review.`
+      },
+      Risks: {
+        small: `sheet: Risks\nrange: A1:D6\n\nrisk,severity,mitigation,status\nOverclaiming token savings,high,describe deterministic fixture limits,open\nImage/table loss,medium,extract dedicated sheets,active`,
+        medium: `sheet: Risks\nrange: A1:D12\n\nAdds source drift, unsupported embeds, XLSX viewer differences, and long-chat privacy review.`,
+        large: `sheet: Risks\nrange: A1:D30\n\nFull risk register with owner, evidence, mitigation, and test coverage.`
+      },
+      Links: {
+        small: `sheet: Links\nrange: A1:D8\n\nlabel,url,type,why\nHTML examples,thariqs.github.io/html-effectiveness,reference,inspiration\nGitHub repo,github.com/ThariqS/html-effectiveness,reference,source attribution`,
+        medium: `sheet: Links\nrange: A1:D16\n\nIncludes source URLs, related docs, benchmark artifacts, and export destinations.`,
+        large: `sheet: Links\nrange: A1:D40\n\nAll links with provenance, anchor text, source row, and archive status.`
+      }
+    };
+    const budgets = ["small", "medium", "large"];
+    let currentMetric = "tokens";
+
+    function chartValue(row) {
+      return row[currentMetric];
+    }
+
+    function renderChart() {
+      const svg = document.getElementById("chart");
+      const scenarios = [...new Set(rows.map(row => row.scenario))];
+      const methods = Object.keys(methodLabels);
+      const values = rows.map(chartValue);
+      const max = currentMetric === "efficiency" ? 1.12 : Math.max(...values) * 1.08;
+      const min = 0;
+      const x0 = 72;
+      const y0 = 42;
+      const width = 590;
+      const height = 230;
+      const xFor = index => x0 + (index / (scenarios.length - 1)) * width;
+      const yFor = value => y0 + height - ((value - min) / (max - min)) * height;
+      const gridTicks = currentMetric === "tokens" ? [0, 1000, 2000, 2500] : currentMetric === "efficiency" ? [0, 0.5, 1.0] : [0, 50, 100];
+      const grid = gridTicks.map(tick => `
+        <line x1="${x0}" y1="${yFor(tick)}" x2="${x0 + width}" y2="${yFor(tick)}" stroke="#e5dfd2"/>
+        <text x="${x0 - 10}" y="${yFor(tick) + 4}" text-anchor="end" font-size="12" fill="#53615a">${tick}</text>`).join("");
+      const lines = methods.map(method => {
+        const methodRows = scenarios.map(scenario => rows.find(row => row.scenario === scenario && row.method === method));
+        const points = methodRows.map((row, index) => `${xFor(index)},${yFor(chartValue(row))}`).join(" ");
+        const dots = methodRows.map((row, index) => `<circle cx="${xFor(index)}" cy="${yFor(chartValue(row))}" r="6" fill="${colors[method]}"><title>${row.label}: ${chartValue(row).toFixed(currentMetric === "tokens" ? 0 : 3)}</title></circle>`).join("");
+        return `<polyline points="${points}" fill="none" stroke="${colors[method]}" stroke-width="4" stroke-linejoin="round"/>${dots}`;
+      }).join("");
+      const labels = scenarios.map((scenario, index) => `<text x="${xFor(index)}" y="${y0 + height + 34}" text-anchor="middle" font-size="13" font-weight="700" fill="#53615a">${scenario}</text>`).join("");
+      svg.innerHTML = `
+        <text x="20" y="22" font-size="18" font-weight="800" fill="#172a2a">${metricLabels[currentMetric][0]}</text>
+        <text x="20" y="344" font-size="13" font-weight="700" fill="#53615a">${metricLabels[currentMetric][1]}</text>
+        ${grid}
+        <line x1="${x0}" y1="${y0}" x2="${x0}" y2="${y0 + height}" stroke="#172a2a"/>
+        <line x1="${x0}" y1="${y0 + height}" x2="${x0 + width}" y2="${y0 + height}" stroke="#172a2a"/>
+        ${lines}
+        ${labels}
+      `;
+      renderLegend();
+    }
+
+    function renderLegend() {
+      const legend = document.getElementById("legend");
+      legend.innerHTML = Object.keys(methodLabels).map(method => {
+        const methodRows = rows.filter(row => row.method === method);
+        const avg = methodRows.reduce((sum, row) => sum + chartValue(row), 0) / methodRows.length;
+        const value = currentMetric === "tokens" ? avg.toFixed(0) : avg.toFixed(3);
+        return `<div class="legendRow"><span class="dot" style="background:${colors[method]}"></span><span>${methodLabels[method]}</span><strong>${value}</strong></div>`;
+      }).join("");
+    }
+
+    function renderSnippet() {
+      const sheet = document.getElementById("sheetSelect").value;
+      const budget = budgets[Number(document.getElementById("budgetRange").value)];
+      document.getElementById("budgetValue").textContent = budget;
+      document.getElementById("rangeOutput").textContent = snippets[sheet][budget];
+    }
+
+    document.getElementById("metricControls").addEventListener("click", event => {
+      const button = event.target.closest("button[data-metric]");
+      if (!button) return;
+      currentMetric = button.dataset.metric;
+      document.querySelectorAll("#metricControls button").forEach(item => item.setAttribute("aria-pressed", String(item === button)));
+      renderChart();
+    });
+    document.getElementById("sheetSelect").addEventListener("change", renderSnippet);
+    document.getElementById("budgetRange").addEventListener("input", renderSnippet);
+    renderChart();
+    renderSnippet();
+  </script>
+</body>
+</html>

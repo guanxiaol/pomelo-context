@@ -1,5 +1,9 @@
 # Pomelo Context Workbook / 柚子上下文工作簿
 
+<p align="center">
+  <img src="assets/pomelo-logo.svg" alt="Pomelo Context Workbook logo" width="760">
+</p>
+
 [![Node CI](https://github.com/guanxiaol/pomelo-context/actions/workflows/node.yml/badge.svg)](https://github.com/guanxiaol/pomelo-context/actions/workflows/node.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-2f8f83.svg)](LICENSE)
 ![Node 22+](https://img.shields.io/badge/node-22%2B-172a2a.svg)
@@ -10,7 +14,16 @@
 
 **把网页、聊天记录、代码上下文和 HTML Artifact 变成低 Token、可切片、可归档的 AI 上下文工作簿。**
 
+[Interactive Demo](https://guanxiaol.github.io/pomelo-context/) · [Launch Kit](docs/launch-kit.zh-en.md) · [中文使用手册](docs/usage-manual.zh.md) · [GitHub interactivity note](docs/github-interactivity.zh.md)
+
+![Pomelo Context Workbook paper-style benchmark figure](assets/paper-results.svg)
+
+<details>
+<summary>Classic benchmark card / 传播用实验卡片</summary>
+
 ![Pomelo Context Workbook experiment results](assets/experiment-results.png)
+
+</details>
 
 ## Why Star This / 为什么值得 Star
 
@@ -122,6 +135,16 @@ Pomelo is a **file protocol + CLI + skill workflow**:
 Want to introduce Pomelo to others? Use the bilingual launch copy in `docs/launch-kit.zh-en.md`.
 
 ![Pomelo social preview](assets/social-preview.png)
+
+## Interactive Components on GitHub
+
+README files are best for static assets: SVG, PNG, badges, tables, Mermaid, and collapsible details. Real JavaScript interaction belongs on GitHub Pages.
+
+Pomelo includes a GitHub Pages demo in `site/index.html`:
+
+[https://guanxiaol.github.io/pomelo-context/](https://guanxiaol.github.io/pomelo-context/)
+
+See `docs/github-interactivity.zh.md` for the README vs Pages split.
 
 ## Contributing
 

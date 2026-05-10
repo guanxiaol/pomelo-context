@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Pomelo Context Workbook paper-style benchmark figure</title>
+  <desc id="desc">Scientific multi-panel benchmark chart for token cost, efficiency, structure, and savings.</desc>
+  <style>
+    .bg { fill: #ffffff; }
+    .rule { stroke: #172a2a; stroke-width: 1.2; }
+    .axis { stroke: #172a2a; stroke-width: 1.5; }
+    .grid { stroke: #d7d7d2; stroke-width: 1; }
+    .dashed { stroke-dasharray: 5 5; }
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif; fill: #172a2a; }
+    .title { font-size: 30px; font-weight: 830; }
+    .subtitle { font-size: 16px; font-weight: 600; fill: #53615a; }
+    .panelTitle { font-size: 20px; font-weight: 830; }
+    .panelSub { font-size: 13px; font-weight: 600; fill: #53615a; }
+    .tick { font-size: 12px; font-weight: 650; fill: #53615a; }
+    .axisText { font-size: 12px; font-weight: 750; fill: #53615a; }
+    .pointLabel { font-size: 12px; font-weight: 750; }
+    .legend { font-size: 11px; font-weight: 700; fill: #53615a; }
+    .caption { font-size: 13px; font-weight: 600; fill: #53615a; }
+  </style>
+  <rect class="bg" width="1200" height="760"/>
+  <text x="60" y="48" class="title">Figure 1. Selective workbook reads preserve facts with lower token cost</text>
+  <text x="60" y="76" class="subtitle">Deterministic benchmark across 4 artifact scenarios; each scenario contains 5 required facts.</text>
+  <line x1="60" y1="132" x2="1140" y2="132" class="rule"/>
+  <line x1="60" y1="452" x2="1140" y2="452" class="rule"/>
+  <line x1="590" y1="132" x2="590" y2="700" class="rule"/>
+  <g transform="translate(0 0)">
+    <text x="60" y="92" class="panelTitle">A. Token cost by scenario</text>
+    <text x="60" y="118" class="panelSub">Lower is better. CWB reads manifest + selected ranges.</text>
+
+    <line x1="88" y1="412" x2="518" y2="412" class="grid"/>
+    <text x="76" y="417" text-anchor="end" class="tick">0</text>
+    <line x1="88" y1="352" x2="518" y2="352" class="grid"/>
+    <text x="76" y="357" text-anchor="end" class="tick">1000</text>
+    <line x1="88" y1="292" x2="518" y2="292" class="grid"/>
+    <text x="76" y="297" text-anchor="end" class="tick">2000</text>
+    <line x1="88" y1="262" x2="518" y2="262" class="grid"/>
+    <text x="76" y="267" text-anchor="end" class="tick">2500</text>
+    <line x1="88" y1="262" x2="88" y2="412" class="axis"/>
+    <line x1="88" y1="412" x2="518" y2="412" class="axis"/>
+    <polyline points="88,304.24 231.33333333333331,306.03999999999996 374.66666666666663,306.28 518,304.48" fill="none" stroke="#7c8a3a" stroke-width="4" stroke-linejoin="round"/>
+    <circle cx="88" cy="304.24" r="5" fill="#7c8a3a"/><circle cx="231.33333333333331" cy="306.03999999999996" r="5" fill="#7c8a3a"/><circle cx="374.66666666666663" cy="306.28" r="5" fill="#7c8a3a"/><circle cx="518" cy="304.48" r="5" fill="#7c8a3a"/><polyline points="88,271.6 231.33333333333331,273.4 374.66666666666663,273.64 518,271.84000000000003" fill="none" stroke="#c15f3f" stroke-width="4" stroke-linejoin="round"/>
+    <circle cx="88" cy="271.6" r="5" fill="#c15f3f"/><circle cx="231.33333333333331" cy="273.4" r="5" fill="#c15f3f"/><circle cx="374.66666666666663" cy="273.64" r="5" fill="#c15f3f"/><circle cx="518" cy="271.84000000000003" r="5" fill="#c15f3f"/><polyline points="88,349.78 231.33333333333331,354.04 374.66666666666663,353.86 518,353.2" fill="none" stroke="#2f8f83" stroke-width="4" stroke-linejoin="round"/>
+    <circle cx="88" cy="349.78" r="5" fill="#2f8f83"/><circle cx="231.33333333333331" cy="354.04" r="5" fill="#2f8f83"/><circle cx="374.66666666666663" cy="353.86" r="5" fill="#2f8f83"/><circle cx="518" cy="353.2" r="5" fill="#2f8f83"/>
+    <text x="88" y="440" text-anchor="middle" class="tick">Plan</text><text x="231.33333333333331" y="440" text-anchor="middle" class="tick">PR</text><text x="374.66666666666663" y="440" text-anchor="middle" class="tick">Editor</text><text x="518" y="440" text-anchor="middle" class="tick">Web</text>
+    <text x="303" y="470" text-anchor="middle" class="axisText">scenario</text>
+    <text x="32" y="337" text-anchor="middle" class="axisText" transform="rotate(-90 32 337)">tokens</text>
+  </g>
+  <g>
+    <text x="648" y="92" class="panelTitle">B. Accuracy per 1K tokens</text>
+    <text x="648" y="118" class="panelSub">Up-left means more conveyed facts per token.</text>
+    <line x1="690" y1="262" x2="690" y2="412" class="axis"/>
+    <line x1="690" y1="412" x2="1040" y2="412" class="axis"/>
+    <line x1="690" y1="282" x2="1040" y2="282" class="grid dashed"/>
+    <text x="682" y="287" text-anchor="end" class="tick">1.0</text>
+    <text x="690" y="440" text-anchor="middle" class="tick">800</text>
+    <text x="1040" y="440" text-anchor="middle" class="tick">2500</text>
+    <text x="865" y="470" text-anchor="middle" class="axisText">average tokens</text>
+    <text x="630" y="337" text-anchor="middle" class="axisText" transform="rotate(-90 630 337)">accuracy / 1K tokens</text>
+    <circle cx="891.5588235294117" cy="369.5691553568339" r="8" fill="#7c8a3a"/>
+    <text x="905.5588235294117" y="374.5691553568339" class="pointLabel">Markdown full read</text><circle cx="1003.5588235294117" cy="395.90078018245754" r="8" fill="#c15f3f"/>
+    <text x="1017.5588235294117" y="400.90078018245754" class="pointLabel">Raw HTML source</text><circle cx="728.7058823529412" cy="279.4041625503411" r="10" fill="#2f8f83"/>
+    <text x="742.7058823529412" y="284.4041625503411" class="pointLabel">CWB small-read</text>
+  </g>
+  <g>
+    <text x="60" y="482" class="panelTitle">C. Structure score</text>
+    <text x="60" y="506" class="panelSub">Navigation proxy from 0 to 100.</text>
+    <text x="88" y="538" class="tick">Markdown full read</text>
+    <rect x="260" y="520" width="160" height="22" rx="5" fill="#7c8a3a"/>
+    <text x="432" y="537" class="pointLabel">50</text><text x="88" y="582" class="tick">Raw HTML source</text>
+    <rect x="260" y="564" width="288" height="22" rx="5" fill="#c15f3f"/>
+    <text x="560" y="581" class="pointLabel">90</text><text x="88" y="626" class="tick">Pomelo CWB small-read</text>
+    <rect x="260" y="608" width="320" height="22" rx="5" fill="#2f8f83"/>
+    <text x="592" y="625" class="pointLabel">100</text>
+  </g>
+  <g>
+    <text x="648" y="482" class="panelTitle">D. Token savings</text>
+    <text x="648" y="506" class="panelSub">CWB small-read relative to full reads.</text>
+    <text x="704" y="540" class="tick">vs Markdown</text>
+    <rect x="854" y="520" width="177.85272625070263" height="26" rx="6" fill="#7c8a3a"/>
+    <text x="1045.8527262507027" y="540" class="pointLabel">44.5%</text><text x="704" y="594" class="tick">vs HTML source</text>
+    <rect x="854" y="574" width="229.8751614291864" height="26" rx="6" fill="#c15f3f"/>
+    <text x="1097.8751614291864" y="594" class="pointLabel">57.5%</text>
+    <circle cx="704" cy="668" r="6" fill="#7c8a3a"/>
+    <text x="716" y="673" class="legend">Markdown full read</text><circle cx="846" cy="668" r="6" fill="#c15f3f"/>
+    <text x="858" y="673" class="legend">Raw HTML source</text><circle cx="988" cy="668" r="6" fill="#2f8f83"/>
+    <text x="1000" y="673" class="legend">Pomelo CWB small-read</text>
+  </g>
+  <text x="60" y="730" class="caption">Caption: CWB small-read means reading manifest.json plus suggested CSV ranges, not the full workbook. Accuracy is exact required-fact coverage, not model judgment.</text>
+</svg>

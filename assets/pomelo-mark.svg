@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Pomelo mark</title>
+  <desc id="desc">A pomelo fruit mark drawn as workbook slices.</desc>
+  <rect width="256" height="256" rx="58" fill="#fbfaf6"/>
+  <path d="M125 32 C154 -2 200 17 195 63 C166 62 142 50 125 32Z" fill="#2f8f83"/>
+  <path d="M198 77 C235 113 239 169 205 207 C167 249 96 245 61 200 C27 156 36 90 81 62 C117 39 162 45 198 77Z" fill="#f4d079"/>
+  <path d="M186 86 C215 116 216 162 191 191 C160 226 105 222 78 188 C52 154 59 104 92 81 C119 62 157 65 186 86Z" fill="#f7f0cf"/>
+  <g fill="none" stroke="#172a2a" stroke-width="8" stroke-linecap="round">
+    <path d="M96 91 C123 119 129 158 107 197"/>
+    <path d="M134 75 C138 113 138 162 128 211"/>
+    <path d="M173 95 C153 121 148 158 160 195"/>
+    <path d="M88 126 H190"/>
+    <path d="M96 165 H181"/>
+  </g>
+  <g fill="#ffffff" stroke="#d8c991" stroke-width="3">
+    <rect x="109" y="113" width="24" height="22" rx="5"/>
+    <rect x="143" y="113" width="24" height="22" rx="5"/>
+    <rect x="139" y="151" width="24" height="22" rx="5"/>
+  </g>
+</svg>
