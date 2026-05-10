@@ -1,0 +1,43 @@
+name: Bug report
+description: Report a packing, reading, conversion, or validation problem.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the unexpected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Include the input type, recipe, command, and output if possible.
+      placeholder: |
+        1. Run `npm run cwb -- pack ...`
+        2. Run `npm run cwb -- inspect ...`
+        3. See ...
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - pack
+        - inspect/read
+        - convert/export
+        - validate
+        - benchmark/experiment
+        - skill/rules
+        - docs
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true

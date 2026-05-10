@@ -1,0 +1,32 @@
+name: Benchmark fixture
+description: Add or request a benchmark fixture for token cost and fact coverage.
+title: "[Benchmark]: "
+labels: ["benchmark"]
+body:
+  - type: textarea
+    id: source
+    attributes:
+      label: Source material
+      description: Link to or describe the source document/artifact.
+    validations:
+      required: true
+  - type: textarea
+    id: facts
+    attributes:
+      label: Required facts
+      description: List exact facts that must survive the conversion.
+      placeholder: |
+        - Feature flag: FLAG_CHECKOUT_ANIM_V2
+        - Owner: Design Systems
+        - Risk: reduced-motion users need a static fallback
+    validations:
+      required: true
+  - type: checkboxes
+    id: formats
+    attributes:
+      label: Formats to compare
+      options:
+        - label: Markdown full read
+        - label: Raw HTML source
+        - label: CWB manifest + selected ranges
+        - label: Other

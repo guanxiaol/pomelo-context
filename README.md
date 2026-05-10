@@ -1,6 +1,28 @@
 # Pomelo Context Workbook / 柚子上下文工作簿
 
+[![Node CI](https://github.com/guanxiaol/pomelo-context/actions/workflows/node.yml/badge.svg)](https://github.com/guanxiaol/pomelo-context/actions/workflows/node.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-2f8f83.svg)](LICENSE)
+![Node 22+](https://img.shields.io/badge/node-22%2B-172a2a.svg)
+![Zero runtime dependencies](https://img.shields.io/badge/runtime_deps-0-7c8a3a.svg)
+![Bilingual](https://img.shields.io/badge/docs-ZH%20%2B%20EN-c15f3f.svg)
+
+**Turn web pages, chats, code reviews, and HTML artifacts into low-token workbooks that agents can read by range and humans can archive forever.**
+
+**把网页、聊天记录、代码上下文和 HTML Artifact 变成低 Token、可切片、可归档的 AI 上下文工作簿。**
+
 ![Pomelo Context Workbook experiment results](assets/experiment-results.png)
+
+## Why Star This / 为什么值得 Star
+
+Star this project if you care about **agent context engineering**: not bigger prompts, but better context containers.
+
+如果你关心 AI Agent 的上下文工程，这个项目值得收藏：重点不是写更长的提示词，而是把信息做成可索引、可切片、可迁移的上下文容器。
+
+- **Lower token cost:** deterministic fixtures show `988` avg tokens for CWB small-read vs `1779` for full Markdown and `2323` for raw HTML source.
+- **Less information loss:** required facts are preserved through manifest + CSV range reads.
+- **Human-friendly archive:** every bundle keeps `workbook.xlsx`, `artifact.html`, notes, CSV sheets, and assets.
+- **Agent-friendly protocol:** skills tell Claude Code, Cursor, Codex, and other agents to read the manifest first, then only relevant ranges.
+- **Open benchmark:** every chart and report in this repo can be regenerated locally.
 
 ## 中文简介
 
@@ -30,6 +52,23 @@ The idea is inspired by Thariq Shihipar's HTML artifact examples. See `ACKNOWLED
 
 For a longer bilingual introduction, see `docs/introduction.zh-en.md`.
 
+## 60-Second Demo
+
+```bash
+git clone https://github.com/guanxiaol/pomelo-context.git
+cd pomelo-context
+npm test
+npm run cwb -- pack examples/web-archive.md --recipe web-or-chat-archive --out tmp/demo.cwb
+npm run cwb -- inspect tmp/demo.cwb --index --budget small
+npm run cwb -- read tmp/demo.cwb --sheet Sections --range A1:E8
+```
+
+What you get:
+
+- A `.cwb` bundle with `manifest.json`, `workbook.xlsx`, CSV sheets, notes, and assets.
+- A low-token index that tells agents what to read next.
+- A human-readable workbook for long-term sharing and review.
+
 ## Quick Start
 
 ```bash
@@ -51,6 +90,47 @@ npm run cwb -- benchmark . --recipe module-map
 ```
 
 That command estimates reading this repository directly versus reading a workbook index and selected ranges.
+
+## Is This Prompt Engineering?
+
+It uses prompts, but it is not only prompt engineering.
+
+Pomelo is a **file protocol + CLI + skill workflow**:
+
+| Layer | Role |
+| --- | --- |
+| `.cwb` protocol | Stores context as manifest, workbook, CSV ranges, notes, and assets. |
+| CLI | Packs, inspects, reads, validates, converts, and benchmarks bundles. |
+| Skills / rules | Teach agents to read selectively instead of loading everything. |
+| Prompt templates | Help agents choose the right sheet/range for a task. |
+
+中文理解：提示词只是调用方式之一，真正核心是 `.cwb` 文件协议和“先索引、后按需读取”的 Skill 工作流。
+
+## Use Cases
+
+| Use case | What Pomelo preserves | Why it helps agents |
+| --- | --- | --- |
+| Web / X archive | text, images, tables, code, links, source URL | Avoids rereading noisy web pages. |
+| AI chat migration | decisions, tasks, summaries, original snippets | Lets a new agent resume a long thread. |
+| Code context | modules, key files, risks, call paths | Keeps coding context cheap and navigable. |
+| PR review | severity, annotated diff, affected files, test gaps | Turns review evidence into reusable context. |
+| Design systems | tokens, components, variants, states | Makes visual/design context queryable. |
+| Research reports | claims, sources, metrics, open questions | Separates durable facts from prose. |
+
+## Share Kit
+
+Want to introduce Pomelo to others? Use the bilingual launch copy in `docs/launch-kit.zh-en.md`.
+
+![Pomelo social preview](assets/social-preview.png)
+
+## Contributing
+
+Pomelo needs real-world fixtures more than abstract ideas. The most valuable contributions are long webpages, chat exports, PR reviews, code contexts, and design/research artifacts that can become reproducible benchmarks.
+
+- Contribution guide: `CONTRIBUTING.md`
+- Use-case issues: `.github/ISSUE_TEMPLATE/use_case.yml`
+- Benchmark fixtures: `.github/ISSUE_TEMPLATE/benchmark_fixture.yml`
+- Maintainer growth notes: `docs/growth-playbook.zh.md`
 
 ## Built-In Recipes
 

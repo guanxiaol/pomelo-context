@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Pomelo Context Workbook social preview</title>
+  <desc id="desc">A bilingual preview card for Pomelo Context Workbook, a low-token context protocol for AI agents.</desc>
+  <style>
+    .bg { fill: #fbfaf6; }
+    .panel { fill: #ffffff; stroke: #d9d4c7; stroke-width: 1.5; }
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif; }
+    .name { font-size: 58px; font-weight: 850; fill: #172a2a; }
+    .zh { font-size: 28px; font-weight: 700; fill: #2f4f4a; }
+    .tagline { font-size: 24px; font-weight: 600; fill: #4e5b56; }
+    .pill { font-size: 18px; font-weight: 800; fill: #ffffff; }
+    .small { font-size: 17px; font-weight: 600; fill: #65706a; }
+    .metric { font-size: 42px; font-weight: 850; fill: #172a2a; }
+    .metricLabel { font-size: 16px; font-weight: 700; fill: #5e6a64; }
+  </style>
+  <rect class="bg" width="1200" height="630"/>
+  <rect class="panel" x="42" y="42" width="1116" height="546" rx="30"/>
+  <text x="82" y="132" class="name">Pomelo Context Workbook</text>
+  <text x="82" y="178" class="zh">柚子上下文工作簿</text>
+  <text x="82" y="226" class="tagline">Turn web pages, chats, code reviews, and HTML artifacts into low-token workbooks.</text>
+  <text x="82" y="264" class="tagline">把网页、聊天记录、代码上下文变成 AI 可按需读取的人类可视化工作簿。</text>
+
+  <rect x="82" y="316" width="230" height="96" rx="18" fill="#edf6f2" stroke="#b9d7cd"/>
+  <text x="106" y="367" class="metric">988</text>
+  <text x="106" y="390" class="metricLabel">avg tokens</text>
+  <text x="106" y="408" class="metricLabel">CWB small-read</text>
+
+  <rect x="340" y="316" width="230" height="96" rx="18" fill="#fff4ec" stroke="#e1c2ae"/>
+  <text x="364" y="367" class="metric">44.5%</text>
+  <text x="364" y="390" class="metricLabel">less than Markdown</text>
+  <text x="364" y="408" class="metricLabel">相比 MD 更省 token</text>
+
+  <rect x="598" y="316" width="230" height="96" rx="18" fill="#f1f2df" stroke="#cfd2a4"/>
+  <text x="622" y="367" class="metric">57.5%</text>
+  <text x="622" y="390" class="metricLabel">less than HTML source</text>
+  <text x="622" y="408" class="metricLabel">比 HTML 更轻</text>
+
+  <rect x="856" y="316" width="230" height="96" rx="18" fill="#eff3fb" stroke="#c5d1e7"/>
+  <text x="880" y="367" class="metric">100%</text>
+  <text x="880" y="390" class="metricLabel">fact accuracy</text>
+  <text x="880" y="408" class="metricLabel">必要事实覆盖</text>
+
+  <rect x="82" y="454" width="154" height="42" rx="21" fill="#172a2a"/>
+  <text x="109" y="482" class="pill">.cwb</text>
+  <rect x="254" y="454" width="154" height="42" rx="21" fill="#2f8f83"/>
+  <text x="284" y="482" class="pill">XLSX</text>
+  <rect x="426" y="454" width="154" height="42" rx="21" fill="#7c8a3a"/>
+  <text x="456" y="482" class="pill">CSV ranges</text>
+  <rect x="598" y="454" width="154" height="42" rx="21" fill="#c15f3f"/>
+  <text x="638" y="482" class="pill">Skills</text>
+
+  <text x="82" y="542" class="small">github.com/guanxiaol/pomelo-context • deterministic benchmark, 4 scenarios, 5 required facts each</text>
+</svg>

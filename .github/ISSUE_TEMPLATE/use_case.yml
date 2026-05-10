@@ -1,0 +1,34 @@
+name: Use-case proposal
+description: Suggest a real-world workflow that Pomelo should support.
+title: "[Use case]: "
+labels: ["use-case"]
+body:
+  - type: textarea
+    id: scenario
+    attributes:
+      label: Scenario
+      description: What source material do you want to turn into a context workbook?
+      placeholder: "Example: a 200-message AI chat export with screenshots and code snippets."
+    validations:
+      required: true
+  - type: textarea
+    id: readers
+    attributes:
+      label: Who reads the output?
+      description: Human, AI agent, Claude Code, Cursor, Codex, another tool, or all of them?
+    validations:
+      required: true
+  - type: textarea
+    id: must_preserve
+    attributes:
+      label: What must be preserved?
+      description: List facts, images, tables, links, code blocks, comments, decisions, or actions.
+    validations:
+      required: true
+  - type: textarea
+    id: success
+    attributes:
+      label: What would success look like?
+      description: Describe how you would evaluate token savings, accuracy, and usability.
+    validations:
+      required: true
